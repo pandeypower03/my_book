@@ -20,11 +20,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from .serializer import UploadedFilesSerializer
 
-def has_uploaded_books(user):
-    """
-    Helper function to check if a user has uploaded any books
-    """
-    return UploadedFiles.objects.filter(user=user).exists()
+
 
 def signup_view(request):
     if request.method == 'POST':
@@ -63,27 +59,33 @@ def authors_and_sellers(request):
     users = users.order_by('username')
     return render(request, 'authors_and_sellers.html', {'users': users})
 
-@login_required
+def has_uploaded_books(user):
+    """
+    Helper function to check if a user has uploaded any books
+    """
+    return UploadedFiles.objects.filter(user=user).exists()
+
 def upload_form(request):
     """
-    View for users who haven't uploaded any books yet
+    View to check if user has books and redirect accordingly
     """
-    if has_uploaded_books(request.user):
-        return redirect('upload_file')
+    if not has_uploaded_books(request.user):
+        # User has no books - show the no_books.html page with upload form
+        if request.method == 'POST':
+            form = UploadedFilesForm(request.POST, request.FILES)
+            if form.is_valid():
+                uploaded_file = form.save(commit=False)
+                uploaded_file.user = request.user
+                uploaded_file.save()
+                messages.success(request, 'First book uploaded successfully!')
+                return redirect('upload_file')
+        else:
+            form = UploadedFilesForm()
+        
+        return render(request, 'no_books.html', {'form': form})
     
-    if request.method == 'POST':
-        form = UploadedFilesForm(request.POST, request.FILES)
-        if form.is_valid():
-            uploaded_file = form.save(commit=False)
-            uploaded_file.user = request.user
-            uploaded_file.save()
-            messages.success(request, 'First book uploaded successfully!')
-            return redirect('upload_file')
-    else:
-        form = UploadedFilesForm()
-    
-    return render(request, 'no_books.html', {'form': form})
-
+    # User has books - redirect to regular upload page
+    return redirect('upload_file')
 @login_required
 def upload_file(request):
     """

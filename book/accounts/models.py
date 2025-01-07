@@ -4,6 +4,7 @@ from datetime import datetime
 
 class CustomUser(AbstractUser):
     # Additional fields for custom user model
+   
     birth_year = models.IntegerField(null=True, blank=True)
     address = models.TextField(null=True, blank=True)
     public_visibility = models.BooleanField(default=True)
