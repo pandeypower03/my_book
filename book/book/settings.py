@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'current',
+    'rest_framework',
+    'rest_framework.authtoken',
+    
 ]
 
 MIDDLEWARE = [
@@ -134,3 +137,10 @@ MEDIA_URL="/media/"
 
 LOGIN_URL = '/login/'  # Redirects to the login page if unauthenticated
 LOGIN_REDIRECT_URL = '/upload/'  # Where to redirect after login
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}

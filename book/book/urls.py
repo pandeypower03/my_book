@@ -18,10 +18,16 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf  import settings
 from django.conf.urls.static import static
+from accounts.views import userApi,LoginAPI
+from accounts.views import UserFilesAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('accounts.urls')),
+    path('user/',userApi.as_view()),
+    path('log/',LoginAPI.as_view()),
+    path('userfiles/', UserFilesAPIView.as_view(), name='user_files_api'),
+
    
   
 ]
