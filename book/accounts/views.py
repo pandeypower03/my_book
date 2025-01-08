@@ -59,6 +59,9 @@ def authors_and_sellers(request):
     users = users.order_by('username')
     return render(request, 'authors_and_sellers.html', {'users': users})
 
+def splash_page(request):
+    return render(request, 'splash.html') 
+
 def has_uploaded_books(user):
     """
     Helper function to check if a user has uploaded any books
