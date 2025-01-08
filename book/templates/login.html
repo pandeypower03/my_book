@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>login</title>
      {%load static%}
-    <link rel="stylesheet" href="{% static 'home.css' %}">
+    <link rel="stylesheet"  href="{% static 'login.css' %}">
 </head>
 <body>
 
@@ -15,10 +15,10 @@
     {% csrf_token %}
     <label for="username">Username:</label>
     <input type="text" name="username" required><br>
-    
+
     <label for="password">Password:</label>
     <input type="password" name="password" required><br>
-    
+
     <button type="submit">login</button>
 </form>
 

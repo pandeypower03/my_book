@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    
     {% load static %}
-    <link rel="stylesheet" href="{% static 'upload.css' %}">
+    <link rel="stylesheet"  href="{% static 'upload.css' %}">
 </head>
 <body>
-    <h1>Welcome, {{ user.username }}!</h1>
+    <div class="header">
+        <h1>Welcome, {{ user.username }}!</h1>
+        <form method="post" action="{% url 'logout' %}" class="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
     
     {% if messages %}
         {% for message in messages %}
@@ -18,15 +22,34 @@
             </div>
         {% endfor %}
     {% endif %}
-    
-    <form method="post" enctype="multipart/form-data">     {% csrf_token %}     
+
+    <h2>YOUR BOOKS!!!!</h2>    
+    {% if files %}        
+        <ul>             
+            {% for file in files %}                 
+                <li>                     
+                    <p><strong>Book Title:</strong> {{ file.book_title }}</p>                     
+                    <p><strong>Description:</strong> {{ file.book_description }}</p>                     
+                    <p><strong>Visibility:</strong> {{ file.visibility }}</p>                     
+                    <p><strong>Cost:</strong> {{ file.cost }}</p>                     
+                    <p><strong>Year of Published:</strong> {{ file.year_of_published }}</p>                                          
+                    {% if file.file_upload %}                         
+                        <a href="{{ file.file_upload.url }}" target="_blank">Download </a>                     
+                    {% else %}                         
+                        <p>No file uploaded.</p>                     
+                    {% endif %}                 
+                </li>             
+            {% endfor %}         
+        </ul>     
+    {% else %}         
+        <p>No files uploaded yet.</p>     
+    {% endif %}  
+
+    <h2>Upload New Book</h2>
+    <form method="post" enctype="multipart/form-data">     
+        {% csrf_token %}     
         {{ form.as_p }}    
-         <button type="submit">Upload</button> 
-        </form>  <h2>Uploaded Information</h2>    
-         {% if files %}        
-          <ul>             {% for file in files %}                 <li>                     <p><strong>Book Title:</strong> {{ file.book_title }}</p>                     <p><strong>Description:</strong> {{ file.book_description }}</p>                     <p><strong>Visibility:</strong> {{ file.visibility }}</p>                     <p><strong>Cost:</strong> {{ file.cost }}</p>                     <p><strong>Year of Published:</strong> {{ file.year_of_published }}</p>                                          <!-- Check if file_upload exists and provide a download link -->                     {% if file.file_upload %}                         <a href="{{ file.file_upload.url }}" target="_blank">Download </a>                     {% else %}                         <p>No file uploaded.</p>                     {% endif %}                 </li>             {% endfor %}         </ul>     {% else %}         <p>No files uploaded yet.</p>     {% endif %}  
-    <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-    </form>
+        <button type="submit">Upload</button> 
+    </form>  
 </body>
+</html>
