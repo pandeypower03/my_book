@@ -76,9 +76,9 @@ input[type="file"]:hover {
     padding: 15px 40px;
     font-size: 1.1rem;
     color: white;
-    background: linear-gradient(to right, #00b894, #00cec9);
+    background: black;
     border: none;
-    border-radius: 30px;
+ 
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 5px 15px rgba(0, 184, 148, 0.3);

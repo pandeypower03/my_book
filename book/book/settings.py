@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
+    
+    'accounts.apps.AccountsConfig', 
     'current',
     'rest_framework',
     'rest_framework.authtoken',
@@ -144,3 +145,11 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+# Email Settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Or your email provider
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'itstheboy19666@gmail.com'
+EMAIL_HOST_PASSWORD = 'gsam admc uyge ckju'  # Use app password for Gmail

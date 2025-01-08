@@ -47,7 +47,7 @@ def login_view(request):
             if has_uploaded_books(user):
                 return redirect('upload_file')
             else:
-                messages.info(request, "Please upload your first book!")
+                
                 return redirect('upload_form')
         else:
             return HttpResponse("Invalid credentials! <br> <a href='/signup/'>Signup here</a>")
